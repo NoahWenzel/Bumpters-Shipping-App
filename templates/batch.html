@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Current Batch: {{batch_id}}{% endblock %}
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% for shp in shipments_info %}
+        <h2>Shipment {{shp['shp_id']}}</h2>
+        <h4>Destination Address:</h4>
+        <p>Name: {{shp['to_address']['name']}}</p>
+        <p>Street: {{shp['to_address']['street1']}} {{shp['to_address']['street2']}}</p>
+        <p>City: {{shp['to_address']['city']}}</p>
+        <p>State: {{shp['to_address']['state']}}</p>
+        <p>Zip: {{shp['to_address']['zip']}}</p>
+        <p>Country: {{shp['to_address']['country']}}</p>
+        <h4>Parcel:</h4>
+        <p>Length: {{shp['parcel']['length']}}"</p>
+        <p>Width: {{shp['parcel']['width']}}"</p>
+        <p>Height: {{shp['parcel']['height']}}"</p>
+        <p>Weight: {{shp['parcel']['weight']}} oz</p>
+    {% endfor %}
+
+    <form style="text-align:center" action="#" method="POST">
+        <input type="submit" value="Purchase Batch!"/>
+    </form>
+{% endblock %}

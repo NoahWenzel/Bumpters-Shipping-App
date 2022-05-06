@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Home Page{% endblock %}
+
+{% block content %}
+<h3 style="text-align:center">Hello {{user}}!</h3>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for msg in messages %}
+            <p style="text-align:center">{{msg}}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+<form style="padding-left: 13%" action="#" method="POST">
+
+    <p>Address</p>
+    <textarea rows="4" cols="30" name="address"></textarea>
+
+    <p>Parcel</p>
+    <p>Length: <input type="text" name="length" placeholder="3" value="3"/></p>
+    <p>Width: <input type="text" name="width" placeholder="3" value="3"/></p>
+    <p>Height: <input type="text" name="height" placeholder="3" value="3"/></p>
+    <p>Weight: <input type="text" name="weight" placeholder="3" value="1"/></p>
+
+    <p><input type="submit" value="Add To Batch"/></p>
+</form>
+{% endblock %}

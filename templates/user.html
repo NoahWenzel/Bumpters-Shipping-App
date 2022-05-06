@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}User{% endblock %}
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+<form style="text-align:center" action="#" method="POST">
+    <p>From Address: </p>
+    <input type="from_address_id" name="from_address_id" placeholder="adr_xxxxxxxxxxxxxxxxx" value="{{from_address_id if from_address_id}}"/>
+    <input type="carrier_account_id_USPS" name="carrier_account_id_USPS" placeholder="ca_xxxxxxxxxxxxxxxxx" value="{{carrier_account_id_USPS if carrier_account_id_USPS}}"/>
+    <input type="submit" value="submit"/>
+</form>
+{% endblock %}

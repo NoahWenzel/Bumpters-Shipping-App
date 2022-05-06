@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}View All Users{% endblock %}
+{% block content %}
+    {% for item in values %}
+        <p>Name: {{item.name}}, From Address: {{item.from_address_id}}, Carrier_ID: {{item.carrier_account_id_USPS}}</p>
+    {% endfor %}
+{% endblock %}
