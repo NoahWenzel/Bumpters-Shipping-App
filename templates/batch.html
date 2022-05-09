@@ -23,9 +23,13 @@
         <p>Width: {{shp['parcel']['width']}}"</p>
         <p>Height: {{shp['parcel']['height']}}"</p>
         <p>Weight: {{shp['parcel']['weight']}} oz</p>
+
+        <form style="text-align:center" href="#" method="POST">
+            <input type="submit" value="Remove {{shp.shp_id}}" name='action'/>
+        </form>
     {% endfor %}
 
-    <form style="text-align:center" action="#" method="POST">
-        <input type="submit" value="Purchase Batch!"/>
+    <form style="text-align:center" href="#" method="POST">
+        <input type="submit" value="Purchase Batch!", name='action'/>
     </form>
 {% endblock %}

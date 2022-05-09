@@ -100,8 +100,8 @@ def home():
             {'id': shipment.id}
         ])
 
-        flash(f'Shipment {shipment.id} created and added successfully!')
-        flash(f'Batch_ID: {batch.id}')
+        flash(f'Shipment {shipment.id} created and added successfully!', 'info')
+        flash(f'Batch_ID: {batch.id}', 'info')
         return redirect(url_for('home'))
 
         # TODO: CREATE OPTIONAL MANIFEST
@@ -193,36 +193,51 @@ def user():
         return redirect(url_for('login'))
 
 
-# display all the shipments in a batch and have a purchase button at the bottom
-    # Also include a checkbox for whether or not you want the shipments manifested.
-    # I also need a way to remove shipments included at the bottom of the page or next to each shipment in the batch view page
+# TODO: include a checkbox for whether or not you want the shipments manifested.
 @app.route('/batch/', methods=['POST', 'GET'])
 def batch():
     easypost.api_keys = session['api_key']
 
     if request.method == 'POST':
-        # Purchase batch!
-        # Unfortunately, I will have to iterate through the batch and buy each shipment individually 
-            # because I want the lowest rate available per shipment and don't want to rely on providing 
-            # a service to user the batch.buy() function...
-        for shp in batch.shipments:
-            current_shipment = easypost.Shipment.retrieve(shp.id)
-            current_shipment.buy(rate=current_shipment.lowest_rate())
+        # Remove shipment from the batch!
+        if request.form['action'] != 'Purchase Batch!':
+            rm_shp = request.form['action'].split()
+            rm_shp = rm_shp[1]
 
-        # Now find the shipping labels and open them up in a new window
-        # Extract label URL's from shipments in batch
-        purchased_url_list = []
+            batch.remove_shipments(
+                shipments=[
+                    {'id': rm_shp}
+                ]
+            )
 
-        for shp in batch.shipments:
-            current_shipment = easypost.Shipment.retrieve(shp.id)
-            purchased_url_list.append(current_shipment.postage_label.label_url)
-        
-        functions.download_labels(purchased_url_list)
+            flash(f'{rm_shp} was removed', 'info')
+            # Just continue on showing the batch page after the shipment was removed
 
 
-    # Otherwise just view the shipments in the batch
+        if request.form['action'] == 'Purchase Batch!':
+            # Purchase batch!
+            # Unfortunately, I will have to iterate through the batch and buy each shipment individually 
+                # because I want the lowest rate available per shipment and don't want to rely on providing 
+                # a service to user the batch.buy() function...
+            for shp in batch.shipments:
+                current_shipment = easypost.Shipment.retrieve(shp.id)
+                current_shipment.buy(rate=current_shipment.lowest_rate())
 
-    # I have to iterate through the batch and retrieve the relevant info in the shipments.
+            # Now find the shipping labels and open them up in a new window
+            # Extract label URL's from shipments in batch
+            purchased_url_list = []
+
+            for shp in batch.shipments:
+                current_shipment = easypost.Shipment.retrieve(shp.id)
+                purchased_url_list.append(current_shipment.postage_label.label_url)
+            
+            functions.download_labels(purchased_url_list)
+
+            flash(f"Batch {batch.id} was purchased successfully!!!", 'info')
+            return redirect(url_for('logout'))
+
+
+    # Now I can just view the shipments in the batch
     shipments_info = []
     for shp in batch.shipments:
         current_shipment = easypost.Shipment.retrieve(shp.id)
