@@ -38,10 +38,12 @@ New York, NY 12345
 ```
 Note that if street2 is not available the line may be omitted entirely.
 
+You will also be able to remove shipments when viewing them from the batch page. All you have to do is click the button below the shipment that says "Remove shp_xxxxxxxxxxxxxx". As you can see the shipment ID will also be on the button for clarification and accuracy.
+
 <h2>Step 4: Purchase The Batch</h2>
 Once you have added all shipments that you want and are ready to purchase them you can head on over to the batch page to view all shipments and their detials. Once satisfied you may click the button at the bottom of the page "Purchase Batch!".
 
-Clicking on this button will start the process of purchasing the batch. Please be aware that depending on how large the batch is this may take a while. Once the entire batch is purchased a new page will open up that contains the PDF labels ready for you to print.
+Clicking on this button will start the process of purchasing the batch. Please be aware that depending on how large the batch is this may take a while. Once the entire batch is purchased a new page will open up that contains the PDF labels ready for you to print. Note that you will also be logged out once the batch has been purchased.
 
 
 
