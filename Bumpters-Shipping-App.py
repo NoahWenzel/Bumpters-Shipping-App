@@ -24,6 +24,7 @@ class users(db.Model):
         self.carrier_account_id_USPS = carrier_account_id_USPS
 
 @app.route('/home/', methods=['POST', 'GET'])
+@app.route('/shipment/', methods=['POST', 'GET'])
 @app.route('/', methods=['POST', 'GET'])
 def home():
     if request.method == 'POST':
