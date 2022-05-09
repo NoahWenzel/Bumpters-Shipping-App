@@ -30,10 +30,10 @@ def home():
     if request.method == 'POST':
         easypost.api_key = session['api_key']
 
-        length = int(request.form['length'])
-        width = int(request.form['width'])
-        height = int(request.form['height'])
-        weight = int(request.form['weight'])
+        length = float(request.form['length'])
+        width = float(request.form['width'])
+        height = float(request.form['height'])
+        weight = float(request.form['weight'])
         to_address = request.form['address']
 
         user = session['user']
