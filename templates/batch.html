@@ -32,8 +32,10 @@
         <p></p>
     {% endfor %}
 
-    <p></p>
+    <p><br></p>
     <form style="text-align:center" href="#" method="POST">
+        <input type="checkbox" id="manifest" name="manifest" value="manifest">
+        <label for="manifest"> Create manifest when purchasing batch!</label><br>
         <input type="submit" value="Purchase Batch!", name='action'/>
     </form>
 {% endblock %}

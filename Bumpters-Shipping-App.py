@@ -2,6 +2,7 @@ from flask import Flask, redirect, url_for, render_template, request, session, f
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
 import easypost
+import time
 import functions
 
 app = Flask(__name__)
@@ -218,11 +219,14 @@ def batch():
 
         if request.form['action'] == 'Purchase Batch!':
             # Purchase batch!
+
             # Unfortunately, I will have to iterate through the batch and buy each shipment individually 
                 # because I want the lowest rate available per shipment and don't want to rely on providing 
                 # a service to user the batch.buy() function...
+            list_o_shipments = []
             for shp in batch.shipments:
                 current_shipment = easypost.Shipment.retrieve(shp.id)
+                list_o_shipments.append(current_shipment)
                 current_shipment.buy(rate=current_shipment.lowest_rate())
 
             # Now find the shipping labels and open them up in a new window
@@ -232,10 +236,32 @@ def batch():
             for shp in batch.shipments:
                 current_shipment = easypost.Shipment.retrieve(shp.id)
                 purchased_url_list.append(current_shipment.postage_label.label_url)
+
+            # Check if a manifest should be created and added to purchased_url_list
+            try:
+                if request.form['manifest'] == 'manifest':
+                    scan_form = easypost.ScanForm.create(
+                        shipments=list_o_shipments
+                    )
+                    
+                    purchased_url_list.append(scan_form.form_url)
+
+                    flash(f"Batch {batch.id} was manifested successfully!!!", 'info')
+                    # return "<h1>Manifest shipments!</h1>"
+            except:
+                pass
             
             functions.download_labels(purchased_url_list)
 
             flash(f"Batch {batch.id} was purchased successfully!!!", 'info')
+
+
+
+
+
+
+
+
             return redirect(url_for('logout'))
 
 
