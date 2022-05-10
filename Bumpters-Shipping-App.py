@@ -216,7 +216,6 @@ def batch():
             flash(f'{rm_shp} was removed', 'info')
             # Just continue on showing the batch page after the shipment was removed
 
-
         if request.form['action'] == 'Purchase Batch!':
             # Purchase batch!
             # Unfortunately, I will have to iterate through the batch and buy each shipment individually 
