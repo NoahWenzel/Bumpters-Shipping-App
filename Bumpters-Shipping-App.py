@@ -147,6 +147,7 @@ def login():
             session['carrier_account_id_USPS'] = ''
             db.session.add(users(user, '', ''))
             db.session.commit()
+            return redirect(url_for('user'))
             
         return redirect(url_for('home'))
     else:
