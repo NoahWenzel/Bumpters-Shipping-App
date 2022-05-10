@@ -143,6 +143,8 @@ def login():
             
         else:
             # Add new user if they don't already exist
+            session['from_address_id'] = ''
+            session['carrier_account_id_USPS'] = ''
             db.session.add(users(user, '', ''))
             db.session.commit()
             
