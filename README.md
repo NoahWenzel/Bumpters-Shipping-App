@@ -1,4 +1,4 @@
-# Bumpters-Shipping-App
+# Bungsters-Shipping-App
 
 This application was designed specifically for the company Bungsters Brix. This is a basic application that can create multiple USPS shipments with the same senders address.
 
